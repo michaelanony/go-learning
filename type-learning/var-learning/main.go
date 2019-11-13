@@ -45,4 +45,5 @@ func main(){
 	//var aname = "Tom"
 	var aname = "Michael"
 	fmt.Println(aname)
+
 }

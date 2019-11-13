@@ -1,5 +1,10 @@
 package main
+
 import "fmt"
+
 func main(){
-		fmt.Println("Hello world")
+	b :='b'
+
+	fmt.Println("answer:",b*5)
+	
 }

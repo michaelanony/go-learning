@@ -19,5 +19,21 @@ func main(){
 	for _,v:=range s3{
 		fmt.Printf("%c\n",v)
 	}
+	s5:="big"
+	byterArray :=[]byte(s5)
+	fmt.Println(byterArray)
+	byterArray[0] = 'p'
+	s5 = string(byterArray)
+	fmt.Println(s5)
+
+	//作业 字符串倒序
+	s6 := "hello"
+	tmpStringArray := []byte(s6)
+	for t:=0 ;t<len(tmpStringArray)/2;t++{
+		tmpStringArray[t],tmpStringArray[len(tmpStringArray)-1-t]= tmpStringArray[len(tmpStringArray)-1-t],tmpStringArray[t]
+	}
+	s6 = string(tmpStringArray)
+	fmt.Println(s6)
+
 }
 

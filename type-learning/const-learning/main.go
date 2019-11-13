@@ -7,6 +7,8 @@ const pi = 3.14
 const (
 	a = 100
 	b
+
+	
 	c=1000
 	d
 	e
@@ -33,9 +35,9 @@ const (
 )
 
 const (
-	a1,b1=iota+1,iota+2
-	c1,d1
-	e1,f1
+	a1,b1=iota+1,iota+2	//iota=0;1,2
+	c1,d1		//iota=1;2,3
+	e1,f1		//iota=2;3,4
 )
 func main(){	
 	
@@ -44,3 +46,7 @@ func main(){
 	fmt.Println(aa,bb,dd)
 
 }
+//const多声明中，若不写，就默认和上行一样
+//iota
+//1.遇到const iota初始化为0 
+//2.const中每新增一行，iota就递增1
