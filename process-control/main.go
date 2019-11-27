@@ -3,7 +3,7 @@ package main
 import "fmt"
 
 func main() {
-	age := 19
+	age := 26
 	if age>18{
 		fmt.Println("over 18")
 	}else if age<18{
@@ -31,23 +31,24 @@ func main() {
 	default:
 		fmt.Println("default")
 	}
-	switch  {
-	case age>2:
-		fmt.Println(">2")
-	case age==2:
-		fmt.Println("2")
-	default:
-		fmt.Println("<2")
-	}
 
+	age2 :=26
+	switch  {
+	case age2<18:
+		fmt.Println("<18")
+		fallthrough //无条件执行下一个case语句
+	case age2 >18&&age2<25:
+		fmt.Println(">18<25")
+	case age<30:
+		fmt.Println("<30")
+	default:
+		fmt.Println(">30")
+	}
 	for i:=0;i<5;i++{
 		for j:=0;j<3;j++{
 			if i==2 && j==2{
-				//break//跳出for循环
-				continue
+				break
 			}
-			fmt.Println(i,j)
-
 		}
 	}
 }
