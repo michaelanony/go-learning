@@ -25,9 +25,13 @@ func main() {
 	switch age {
 	case 1:
 		fmt.Println("1")
+		fallthrough //无条件执行下面的case语句
+	case 2,4,5:
+		fmt.Println("245")
 	default:
 		fmt.Println("default")
 	}
+
 	age2 :=26
 	switch  {
 	case age2<18:
@@ -47,5 +51,4 @@ func main() {
 			}
 		}
 	}
-
 }
