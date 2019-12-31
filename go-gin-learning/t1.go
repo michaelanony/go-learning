@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	r := gin.Default()
+	r := gin.De
 	r.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "hello")
 	})
