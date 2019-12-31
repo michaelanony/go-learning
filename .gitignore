@@ -1,4 +1,7 @@
 .idea
-pkg
-bin
+.vscode
 *.exe
+bin
+pkg
+*.json
+.DS_Store
