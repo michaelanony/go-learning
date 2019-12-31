@@ -5,7 +5,7 @@ import "fmt"
 //统计1-200000的数字中，哪些是素数？
 
 func putNum(intChan chan int){
-	for i:=1;i<=10000000;i++{
+	for i:=1;i<=10000;i++{
 		intChan<-i
 		fmt.Printf("Now put num:%d",i)
 	}

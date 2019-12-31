@@ -1,18 +1,54 @@
 package main
 
 import (
-"fmt"
-"net/http"
+	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"strings"
 )
 
-const domainUrl  = "http://callback-api.bilibili.cn"
-func get(url string){
-	client := &http.Client{}
-	targetUrl := domainUrl+url
-	req,_:=http.NewRequest("GET",targetUrl,nil)
-	rep,_ := client.Do(req)
+type Test struct {
+}
+
+func get(wrongChan chan string, exitChan chan bool) {
+	for i := 0; i < 100; i++ {
+		url := ""
+		resp, err := http.Get(url)
+		if err != nil {
+			fmt.Println(err)
+			log.Fatal(err)
+		}
+		ret, _ := ioutil.ReadAll(resp.Body)
+		strRet := string(ret)
+
+		if strings.Contains(strRet, "\"data\":null") {
+			fmt.Println(strRet)
+			wrongChan <- strRet
+		}
+	}
+	exitChan<-true
 
 }
+
 func main() {
-	get("/x/tv/modpage_v2")
+	wrongChan := make(chan string, 1000)
+	exitChan := make(chan bool,100)
+	for i := 0; i < 100; i++ {
+		go get(wrongChan,exitChan)
+	}
+	go func() {
+		for i:=0;i<100;i++{
+			<-exitChan
+		}
+		close(wrongChan)
+	}()
+	for{
+		res,ok :=<-wrongChan
+		if !ok{
+			break
+		}
+		fmt.Println(res)
+	}
+
 }
