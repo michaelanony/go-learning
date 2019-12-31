@@ -3,4 +3,5 @@
 *.exe
 bin
 pkg
+src
 *.json
