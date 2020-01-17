@@ -13,7 +13,7 @@ type Transfer struct {
 	Buf [8096]byte //传输时使用的缓冲
 
 }
-func (this *Transfer)readPkg() (mes message.Message,err error) {
+func (this *Transfer) ReadPkg() (mes message.Message,err error) {
 	fmt.Println("Reading data....")
 
 	_,err =this.Conn.Read(this.Buf[:4])
@@ -36,7 +36,7 @@ func (this *Transfer)readPkg() (mes message.Message,err error) {
 	return
 
 }
-func (this *Transfer)writePkg(data []byte) (err error) {
+func (this *Transfer) WritePkg(data []byte) (err error) {
 	//先发送一个长度给对方
 	var pkgLen uint32
 	pkgLen = uint32(len(data))

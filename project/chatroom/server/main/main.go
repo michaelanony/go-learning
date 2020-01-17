@@ -1,9 +1,7 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"go-learning/project/chatroom/common/message"
 	"io"
 	"net"
 )
@@ -15,28 +13,17 @@ import (
 
 func process(conn net.Conn)  {
 	defer conn.Close()
-	for{
-		//这里我们将读取数据包，直接封装成一个函数，返回message
-		mes,err:=readPkg(conn)
-		if err!=nil{
-			if err==io.EOF{
-				fmt.Println("client quit.")
-				return
-			}else{
-				panic(err)
-				return
-			}
-		}
-		fmt.Println("message=",mes)
-		err = serverProcessMes(conn,&mes)
-		if err!=nil{
-			panic(err)
-		}
+	processor := &Processor{
+		Conn:conn,
+	}
+	err:=processor.process()
+	if err!=nil{
+		panic(err)
 	}
 }
 func main() {
 	fmt.Println("Server is listening on 8889...")
-	listen,err:=net.Listen("tcp","127.0.0.1:8889")
+	listen,err:=net.Listen("tcp","127.0.0.1:8880")
 	defer listen.Close()
 	if err!=nil{
 		panic(err)

@@ -11,7 +11,7 @@ import (
 func login(userId int,userPwd string)(err error)  {
 	//fmt.Printf("userId=%d userPwd=%s\n",userId,userPwd)
 	//1.连接到服务器
-	conn,err:=net.Dial("tcp","127.0.0.1:8889")
+	conn,err:=net.Dial("tcp","127.0.0.1:8880")
 	if err!=nil{
 		panic(err)
 		return

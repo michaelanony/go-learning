@@ -7,10 +7,10 @@ import (
 	"net"
 )
 type UserProcess struct {
-	conn net.Conn
+	Conn net.Conn
 
 }
-func (this *UserProcess)serverProcessLogin(conn net.Conn,mes *message.Message) (err error) {
+func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 	//1.先从mes中取出mes.Data,并直接反序列化成LoginMes
 	var loginMes message.LoginMes
 	err = json.Unmarshal([]byte(mes.Data),&loginMes)
@@ -45,8 +45,8 @@ func (this *UserProcess)serverProcessLogin(conn net.Conn,mes *message.Message) (
 	}
 	//6、发送data，我们将其封装到writePkg
 	tf :=&utils.Transfer{
-		Conn: this.conn,
+		Conn: this.Conn,
 	}
-	err = tf.writePkg(conn, data)
+	err = tf.WritePkg(data)
 	return
 }
