@@ -35,7 +35,7 @@ func update(w http.ResponseWriter, r *http.Request) {
 }
 
 func lyStaticNum(w http.ResponseWriter, r *http.Request) {
-	mods, _ := LyStaticNum()
+	mods, _ := lyStaticNumAll()
 	buf, _ := json.Marshal(mods)
 	w.Header().Set("Content-Type", "application/json")
 	w.Write(buf)
