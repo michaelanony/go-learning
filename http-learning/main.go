@@ -14,6 +14,7 @@ type Test struct {
 func get(wrongChan chan string, exitChan chan bool) {
 	for i := 0; i < 100; i++ {
 		url := ""
+		cookie:=&http.Cookie{}
 		resp, err := http.Get(url)
 		if err != nil {
 			fmt.Println(err)
