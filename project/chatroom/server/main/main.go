@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"go-learning/project/chatroom/server/model"
 	"io"
 	"net"
 )
@@ -21,7 +22,13 @@ func process(conn net.Conn)  {
 		fmt.Println(err)
 	}
 }
+//完成对UserDao的初始化任务
+func initUserDao()  {
+	model.MyUserDao = model.NewUserDao(pool)
+}
 func main() {
+	initPool("192.168.11.31:30002")
+	initUserDao()//需要在initPool后，因为需要pool
 	fmt.Println("Server is listening on 8889...")
 	listen,err:=net.Listen("tcp","127.0.0.1:8880")
 	defer listen.Close()

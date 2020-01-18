@@ -7,6 +7,7 @@ import (
 	"go-learning/project/chatroom/client/utils"
 	"go-learning/project/chatroom/common/message"
 	"net"
+	"os"
 )
 
 type UserProcess struct {
@@ -88,5 +89,61 @@ func (this *UserProcess)Login(userId int,userPwd string)(err error)  {
 	}else{
 		fmt.Println(loginResMes.Error)
 	}
+	return
+}
+
+func (this *UserProcess)Register(userId int,userPwd string,userName string)(err error)  {
+	//1.连接到服务器
+	conn,err:=net.Dial("tcp","127.0.0.1:8880")
+	if err!=nil{
+		panic(err)
+		return
+	}
+	//延时关闭
+	defer conn.Close()
+	//2、准备通过conn发送消息给服务
+	var mes message.Message
+	mes.Type = message.RegisterMesType
+	//3、创建一个LoginMes结构体
+	var registerMes message.RegisterMes
+	registerMes.User.UserId = userId
+	registerMes.User.UserPwd=userPwd
+	registerMes.User.UserName=userName
+	//4、将registerMes序列化
+	data,err:=json.Marshal(registerMes)
+	if err!=nil{
+		panic(err)
+		return
+	}
+	//5、把data赋值给mes.Data字段
+	mes.Data = string(data)
+	//6、将mes进行序列化
+	data,err =json.Marshal(mes)
+	if err!=nil{
+		panic(err)
+		return
+	}
+	tf := &utils.Transfer{
+		Conn: conn,
+	}
+	err=tf.WritePkg(data)
+	if err!=nil{
+		panic(err)
+		return
+	}
+	mes,err = tf.ReadPkg()
+	if err!=nil{
+		panic(err)
+		return
+	}
+	//将mes到data部分反序列化成RegisterResMes
+	var registerResMes message.RegisterResMes
+	err = json.Unmarshal([]byte(mes.Data),&registerResMes)
+	if registerResMes.Code ==200{
+		fmt.Println("注册成功")
+	}else{
+		fmt.Println(registerResMes.Error)
+	}
+	os.Exit(0)
 	return
 }

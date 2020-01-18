@@ -8,7 +8,7 @@ import (
 
 var userId int
 var userPwd string
-
+var userName string
 
 func main() {
 	var key int
@@ -32,6 +32,14 @@ func main() {
 
 			case 2:
 				fmt.Println("注册用户")
+				fmt.Println("请输入用户id：")
+				fmt.Scanf("%d\n",&userId)
+				fmt.Println("请输入用户密码：")
+				fmt.Scanf("%d\n",&userPwd)
+				fmt.Println("请输入用户名字(nickname):")
+				fmt.Scanf("%d\n",&userName)
+				up := &process.UserProcess{}
+				up.Register(userId,userPwd,userName)
 			case 3:
 				fmt.Println("退出系统")
 				os.Exit(0)
