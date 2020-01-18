@@ -18,7 +18,7 @@ func process(conn net.Conn)  {
 	}
 	err:=processor.process()
 	if err!=nil{
-		panic(err)
+		fmt.Println(err)
 	}
 }
 func main() {

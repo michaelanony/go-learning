@@ -2,6 +2,8 @@ package process
 
 import (
 	"fmt"
+	"go-learning/project/chatroom/client/utils"
+	"net"
 	"os"
 )
 
@@ -24,5 +26,20 @@ func ShowMenu()  {
 	case 4:
 		fmt.Println("正在退出系统...")
 		os.Exit(0)
+	}
+}
+
+func serverProcessMes(conn net.Conn)  {
+	tf := &utils.Transfer{
+		Conn:conn,
+	}
+	for{
+		fmt.Println("Waiting for message from server")
+		mes,err:=tf.ReadPkg()
+		if err !=nil{
+			fmt.Println("Read message error")
+			panic(err)
+		}
+		fmt.Printf("mes=%v",mes)
 	}
 }

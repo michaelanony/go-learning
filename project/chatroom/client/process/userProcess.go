@@ -79,6 +79,12 @@ func (this *UserProcess)Login(userId int,userPwd string)(err error)  {
 	err = json.Unmarshal([]byte(mes.Data),&loginResMes)
 	if loginResMes.Code ==200{
 		fmt.Println("Login Success")
+		//启动一个协程保持和服务端通讯，如果服务端有数据推送给客户端
+		go serverProcessMes(conn)
+		//1、调用登入成功后的菜单
+		for{
+			ShowMenu()
+		}
 	}else{
 		fmt.Println(loginResMes.Error)
 	}
