@@ -1,14 +1,19 @@
-package main
+package process
 
 import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
+	"go-learning/project/chatroom/client/utils"
 	"go-learning/project/chatroom/common/message"
 	"net"
 )
 
-func login(userId int,userPwd string)(err error)  {
+type UserProcess struct {
+
+}
+
+func (this *UserProcess)Login(userId int,userPwd string)(err error)  {
 	//fmt.Printf("userId=%d userPwd=%s\n",userId,userPwd)
 	//1.连接到服务器
 	conn,err:=net.Dial("tcp","127.0.0.1:8880")
@@ -61,7 +66,10 @@ func login(userId int,userPwd string)(err error)  {
 	}
 
 	//这里处理服务端返回到消息
-	mes, err = readPkg(conn)
+	tf := &utils.Transfer{
+		Conn: conn,
+	}
+	mes, err = tf.ReadPkg()
 	if err!=nil{
 		panic(err)
 		return

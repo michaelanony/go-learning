@@ -70,5 +70,4 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 	go saveUi(ctx)
-	go
 }

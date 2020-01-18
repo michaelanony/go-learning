@@ -12,12 +12,13 @@ import (
 type Processor struct {
 	Conn net.Conn
 }
-func (this *Processor)serverProcessMes(mes *message.Message) (err error) {
+
+func (this *Processor) serverProcessMes(mes *message.Message) (err error) {
 	switch mes.Type {
 	case message.LoginMesType:
 		//处理登入逻辑
 		up := &processes.UserProcess{
-			Conn : this.Conn,
+			Conn: this.Conn,
 		}
 		err = up.ServerProcessLogin(mes)
 	case message.RegisterMesType:
@@ -28,25 +29,25 @@ func (this *Processor)serverProcessMes(mes *message.Message) (err error) {
 	return
 }
 
-func (this *Processor) process ()  (err error){
-	for{
+func (this *Processor) process() (err error) {
+	for {
 		//这里我们将读取数据包，直接封装成一个函数，返回message
-		tf:=&utils.Transfer{
+		tf := &utils.Transfer{
 			Conn: this.Conn,
 		}
-		mes,err:=tf.ReadPkg()
-		if err!=nil{
-			if err==io.EOF{
+		mes, err := tf.ReadPkg()
+		if err != nil {
+			if err == io.EOF {
 				fmt.Println("client quit.")
 				return err
-			}else{
+			} else {
 				panic(err)
 				return err
 			}
 		}
-		fmt.Println("message=",mes)
+		fmt.Println("message=", mes)
 		err = this.serverProcessMes(&mes)
-		if err!=nil{
+		if err != nil {
 			panic(err)
 		}
 	}
