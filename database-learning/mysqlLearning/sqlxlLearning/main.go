@@ -7,11 +7,14 @@ import (
 )
 
 var db *sqlx.DB
-type user struct {
-	Id int
-	Name string
-	Age int
+
+type staticNum struct {
+	Sproject int
+	Id       int
+	Szhuanli int
+	Smanyi   int
 }
+
 func initDB() (err error) {
 	dsn := "michael:cccbbb@tcp(192.168.11.31:30001)/home"
 	db, err := sqlx.Connect("mysql", dsn) //不检查用户密码
@@ -29,12 +32,12 @@ func initDB() (err error) {
 }
 
 func main() {
-	err:=initDB()
-	if err!=nil{
+	err := initDB()
+	if err != nil {
 		panic(err)
 	}
-	sqlStr:=`select * from lywebback_papers where id =1`
-	var u user
-	db.Get(&u,sqlStr)
-	fmt.Printf("%v",u)
+	sqlStr := `select * from lywebback_static_num where id =1`
+	var u staticNum
+	db.Get(&u, sqlStr)
+	fmt.Printf("%v", u)
 }
