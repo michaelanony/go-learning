@@ -31,8 +31,9 @@ func initDB() (err error) {
 func queryOne(id int) {
 	var u1 user
 	//1、写查询单个记录的sql语句.查询单个数据
-	sqlStr := `select id,city,abbreviation from city_abbreviation where id = ?;`
+	//sqlStr := ``
 	//2、执行
+<<<<<<< HEAD
 	db.QueryRow(sqlStr, id).Scan(&u1.id, &u1.city, &u1.abbreviation)
 	//3、拿到结果
 	fmt.Printf("%v", u1)
@@ -42,6 +43,17 @@ func queryMore(n int) {
 	rows, err := db.Query(sqlStr, n)
 	if err != nil {
 		fmt.Printf("%v", err)
+=======
+	db.QueryRow(`select id,city,abbreviation from city_abbreviation where id = 4549`).Scan(&u1.id, &u1.city, &u1.abbreviation)
+	//3、拿到结果
+	fmt.Printf("%v", u1)
+}
+func queryMore(n int){
+	sqlStr:=`select city from city_abbreviation where id >1;`
+	rows,err:=db.Query(sqlStr)
+	if err!=nil{
+		fmt.Printf("%v",err)
+>>>>>>> 40bcc2c8f7d06b586b19ca26117e009cf2a19569
 	}
 	defer rows.Close()
 	for rows.Next() {
@@ -86,12 +98,18 @@ func transaciton() {
 	if err != nil {
 		tx.Rollback()
 	}
+<<<<<<< HEAD
 	_, err = tx.Exec(sqlStr2)
 	if err != nil {
+=======
+	fmt.Println(ret1)
+	ret2,err:=tx.Exec(sqlStr2)
+	if err!=nil{
+>>>>>>> 40bcc2c8f7d06b586b19ca26117e009cf2a19569
 		tx.Rollback()
 	}
 	tx.Commit()
-
+	fmt.Println(ret2)
 }
 func main() {
 	err := initDB()
@@ -99,8 +117,8 @@ func main() {
 		fmt.Printf("init failed%v", err)
 	}
 	fmt.Println("success")
-	//queryOne(4555)
-	queryMore(4000)
+	queryOne(4555)
+	//queryMore(4000)
 
 	//查询多条数据
 }
