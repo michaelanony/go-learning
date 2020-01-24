@@ -31,15 +31,15 @@ func initDB() (err error) {
 func queryOne(id int) {
 	var u1 user
 	//1、写查询单个记录的sql语句.查询单个数据
-	sqlStr := `select id,city,abbreviation from city_abbreviation where id = ?;`
+	//sqlStr := ``
 	//2、执行
-	db.QueryRow(sqlStr,id).Scan(&u1.id, &u1.city, &u1.abbreviation)
+	db.QueryRow(`select id,city,abbreviation from city_abbreviation where id = 4549`).Scan(&u1.id, &u1.city, &u1.abbreviation)
 	//3、拿到结果
 	fmt.Printf("%v", u1)
 }
 func queryMore(n int){
-	sqlStr:=`select id,name,age from user where id >?;`
-	rows,err:=db.Query(sqlStr,n)
+	sqlStr:=`select city from city_abbreviation where id >1;`
+	rows,err:=db.Query(sqlStr)
 	if err!=nil{
 		fmt.Printf("%v",err)
 	}
@@ -85,12 +85,13 @@ func transaciton()  {
 	if err!=nil{
 		tx.Rollback()
 	}
+	fmt.Println(ret1)
 	ret2,err:=tx.Exec(sqlStr2)
 	if err!=nil{
 		tx.Rollback()
 	}
 	tx.Commit()
-
+	fmt.Println(ret2)
 }
 func main() {
 	err := initDB()
@@ -98,8 +99,8 @@ func main() {
 		fmt.Printf("init failed%v", err)
 	}
 	fmt.Println("success")
-	//queryOne(4555)
-	queryMore(4000)
+	queryOne(4555)
+	//queryMore(4000)
 
 	//查询多条数据
 }
