@@ -9,8 +9,8 @@ import (
 var db *sql.DB //db连接池
 type user struct {
 	id           int
-	city         string
-	abbreviation string
+	city         sql.NullString
+	abbreviation sql.NullString
 }
 
 func initDB() (err error) {
@@ -33,21 +33,21 @@ func queryOne(id int) {
 	//1、写查询单个记录的sql语句.查询单个数据
 	sqlStr := `select id,city,abbreviation from city_abbreviation where id = ?;`
 	//2、执行
-	db.QueryRow(sqlStr,id).Scan(&u1.id, &u1.city, &u1.abbreviation)
+	db.QueryRow(sqlStr, id).Scan(&u1.id, &u1.city, &u1.abbreviation)
 	//3、拿到结果
 	fmt.Printf("%v", u1)
 }
-func queryMore(n int){
-	sqlStr:=`select id,name,age from user where id >?;`
-	rows,err:=db.Query(sqlStr,n)
-	if err!=nil{
-		fmt.Printf("%v",err)
+func queryMore(n int) {
+	sqlStr := `select id,city,abbreviation from city_abbreviation where id >?;`
+	rows, err := db.Query(sqlStr, n)
+	if err != nil {
+		fmt.Printf("%v", err)
 	}
 	defer rows.Close()
-	for rows.Next(){
+	for rows.Next() {
 		var u1 user
 		err := rows.Scan(&u1.id, &u1.city, &u1.abbreviation)
-		if err!=nil{
+		if err != nil {
 			fmt.Printf("%v", err)
 		}
 		fmt.Printf("%v", u1)
@@ -56,37 +56,38 @@ func queryMore(n int){
 
 //预处理插入多条数据
 func insert() {
-	sqlStr :=`insert into user(name,age) values(?,?)`
-	stmt,err:=db.Prepare(sqlStr)
-	if err !=nil{
+	sqlStr := `insert into user(name,age) values(?,?)`
+	stmt, err := db.Prepare(sqlStr)
+	if err != nil {
 		fmt.Printf("failed")
 	}
 	defer stmt.Close()
 	var m = map[string]int{
-		"lq":30,
-		"wq":32,
-		"ts":21,
+		"lq": 30,
+		"wq": 32,
+		"ts": 21,
 	}
-	for k,v :=range m {
-		stmt.Exec(k,v)
+	for k, v := range m {
+		stmt.Exec(k, v)
 	}
 }
+
 //mysql事务处理
-func transaciton()  {
+func transaciton() {
 	//1.开启事务
-	tx,err:=db.Begin()
-	if err!=nil{
+	tx, err := db.Begin()
+	if err != nil {
 		fmt.Printf("failed")
 		return
 	}
-	sqlStr1:=`update user set age=age-2 where id =1`
-	sqlStr2:=`update user set age=age+2 where id =2`
-	ret1,err:=tx.Exec(sqlStr1)
-	if err!=nil{
+	sqlStr1 := `update user set age=age-2 where id =1`
+	sqlStr2 := `update user set age=age+2 where id =2`
+	_, err = tx.Exec(sqlStr1)
+	if err != nil {
 		tx.Rollback()
 	}
-	ret2,err:=tx.Exec(sqlStr2)
-	if err!=nil{
+	_, err = tx.Exec(sqlStr2)
+	if err != nil {
 		tx.Rollback()
 	}
 	tx.Commit()
