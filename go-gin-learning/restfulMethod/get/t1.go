@@ -9,6 +9,8 @@ func getting(c *gin.Context)  {
 	
 }
 func main() {
+	//创建路由，默认使用Logger()和Recovery（）这两个中间件
+	//若使用gin.New()则不使用这两个中间件
 	r := gin.Default()
 	r.GET("/welcome", func(c *gin.Context) {
 		//url参数可以通过DefaultQuery（）或Query（）方法获取
