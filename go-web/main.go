@@ -42,7 +42,7 @@ func lyStaticNum(w http.ResponseWriter, r *http.Request) {
 }
 func main() {
 	http.HandleFunc(`/`, listView)
-	http.HandleFunc(`/user`, userAll)
+	http.HandleFunc(`/userHandle`, userAll)
 	http.HandleFunc(`/user1`, userOne)
 	http.HandleFunc(`/userupdate`, update)
 	http.HandleFunc(`/ly`, lyStaticNum)

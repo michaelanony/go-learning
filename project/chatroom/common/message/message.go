@@ -23,7 +23,7 @@ type LoginRes struct {
 }
 
 type RegisterMes struct {
-	User User	`json:"user"`
+	User User	`json:"userHandle"`
 }
 
 type RegisterResMes struct {

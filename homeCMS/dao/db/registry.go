@@ -6,8 +6,8 @@ import (
 
 //注册用户
 func RegistryUser(homeUser *model.HomeUser) (userId int64 ,err error) {
-	sqlStr:="insert into home_user(u_name,u_nickname,u_password)"
-	ret, err := MysqlDB.Exec(sqlStr, homeUser.UName, homeUser.UNickname, homeUser.UPassword)
+	sqlStr:="insert into home_user(u_name,u_nickname,u_password,u_register_ip) values(?,?,?,?)"
+	ret, err := MysqlDB.Exec(sqlStr, homeUser.UName, homeUser.UNickname, homeUser.UPassword,homeUser.URegisterIp)
 	if err!=nil{
 		return
 	}

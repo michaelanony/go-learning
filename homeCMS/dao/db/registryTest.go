@@ -19,5 +19,5 @@ func TestGetUser(t *testing.T)  {
 	if err!=nil{
 		panic(err)
 	}
-	t.Logf("user:%v",user)
+	t.Logf("userHandle:%v",user)
 }

@@ -9,6 +9,7 @@ import (
 
 func main() {
 	router :=gin.Default()
+	rr := controller.GinRouter(router)
 	mysqlDns:="michael:cccbbb@tcp(192.168.11.31:30001)/testDb?parseTime=true"
 	err := db.Init(mysqlDns, "")
 	if err!=nil{
@@ -18,9 +19,8 @@ func main() {
 	if err!=nil{
 		fmt.Println(err)
 	}
-	router.GET("/login",controller.LoginHandle)
-	router.POST("/registry",controller.RegistryHandle)
-	if err=router.Run(":8000");err!=nil{
+
+	if err=rr.Run("0.0.0.0:80");err!=nil{
 		panic(err)
 	}
 }

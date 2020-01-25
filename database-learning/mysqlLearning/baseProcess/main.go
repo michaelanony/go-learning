@@ -65,7 +65,7 @@ func queryMore(n int){
 
 //预处理插入多条数据
 func insert() {
-	sqlStr := `insert into user(name,age) values(?,?)`
+	sqlStr := `insert into userHandle(name,age) values(?,?)`
 	stmt, err := db.Prepare(sqlStr)
 	if err != nil {
 		fmt.Printf("failed")
@@ -89,8 +89,8 @@ func transaciton() {
 		fmt.Printf("failed")
 		return
 	}
-	sqlStr1 := `update user set age=age-2 where id =1`
-	sqlStr2 := `update user set age=age+2 where id =2`
+	sqlStr1 := `update userHandle set age=age-2 where id =1`
+	sqlStr2 := `update userHandle set age=age+2 where id =2`
 	_, err = tx.Exec(sqlStr1)
 	if err != nil {
 		tx.Rollback()
