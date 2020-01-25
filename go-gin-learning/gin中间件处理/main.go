@@ -30,10 +30,17 @@ func MiddleWare()gin.HandlerFunc  {
 func main() {
 	r := gin.Default()
 	//注册中间件
-	r.Use(MiddleWare())
+	r.Use(MiddleWare())//申明全局中间件
 	//大括号是为了代码规范
 	{
 		r.GET("/middleware", func(c *gin.Context) {
+			//取值
+			req,_:=c.Get("request")
+			fmt.Println("request:",req)
+			c.JSON(200,gin.H{"request":req})
+		})
+		//跟在路由后面，使用局部中间件
+		r.GET("/partMiddleware", MiddleWare(),func(c *gin.Context) {
 			//取值
 			req,_:=c.Get("request")
 			fmt.Println("request:",req)
