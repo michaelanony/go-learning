@@ -1,0 +1,17 @@
+Go-Micro
+
+1、定义接口
+基于Proto协议（srv）
+使用proto-gen-micro插件生成Micro代码（srv）
+
+2、实现接口
+定义Handler
+
+3、创建服务
+NewService服务
+Init初始化
+挂载接口
+运行
+
+生成接口
+protoc --proto_path=. --go_out=. --micro_out=. */*.proto

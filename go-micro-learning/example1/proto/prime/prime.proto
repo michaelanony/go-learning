@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+message PrimeRequest{
+    int64 input = 1;
+}
+
+message PrimeResponse{
+    int64 output = 1;
+}
+
+service Prime{
+    rpc GetPrime (PrimeRequest) returns (PrimeResponse){
+    }
+}
+
