@@ -48,6 +48,6 @@ func (m *MemorySession)Del(key string)(err error)  {
 	return
 }
 
-func (m *MemorySession)Save(key string)(err error)  {
+func (m *MemorySession)Save()(err error)  {
 	return
 }

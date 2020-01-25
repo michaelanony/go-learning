@@ -1,7 +1,5 @@
 package main
 
-import "github.com/gin-gonic/gin"
-
 //设计一个通用的session服务
 //1、
 //session接口设计：
@@ -23,8 +21,4 @@ import "github.com/gin-gonic/gin"
 //5、redisSessionMgr设计
 //定义redisSessionMgr对象（字段：redis地址、密码、连接池、读写锁、大Map）
 
-func main() {
-	r :=gin.Default()
 
-	r.Run(":8000")
-}

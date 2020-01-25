@@ -13,4 +13,5 @@ require (
 	github.com/micro/go-micro v1.18.0
 	github.com/onsi/ginkgo v1.11.0 // indirect
 	github.com/onsi/gomega v1.8.1 // indirect
+	github.com/satori/go.uuid v1.2.0
 )
