@@ -1,0 +1,5 @@
+package middleWare
+
+func checkLogin()  {
+	
+}

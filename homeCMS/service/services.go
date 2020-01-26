@@ -12,11 +12,11 @@ func RegistrySvc(user *model.HomeUser) (err error) {
 		return errno.ERROR_USER_FORMAT
 	}
 	nickname := user.UNickname
-	_, err = db.GetUser(nickname)
+	_, err = db.GinDao.GetUser(nickname)
 	if err==nil{
 		return errno.ERROR_USER_EXISTS
 	}
-	userId ,err := db.RegistryUser(user);
+	userId ,err := db.GinDao.RegistryUser(user);
 	if err!=nil{
 		fmt.Println(err)
 	}
