@@ -1,4 +1,4 @@
-package db
+package test
 
 //import (
 //	"testing"
