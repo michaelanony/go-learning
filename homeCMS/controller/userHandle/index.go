@@ -1,6 +1,7 @@
 package userHandle
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
@@ -8,14 +9,16 @@ import (
 	"go-learning/homeCMS/errno"
 	"go-learning/homeCMS/model"
 	"go-learning/homeCMS/service"
+	"io/ioutil"
 	"net/http"
 )
 
 func Routers(r *gin.RouterGroup)  {
 	rr :=r.Group("/api/user")
 	rr.POST("/login", LoginHandle)
+	rr.OPTIONS("/login",LoginHandle)
 	rr.POST("/registry", RegistryHandle)
-	rr.GET("/test",CurrentUserTest)
+	rr.GET("/current",CurrentUserTest)
 }
 func RegistryHandle(c *gin.Context)  {
 	ip := c.ClientIP()
@@ -57,8 +60,18 @@ func RegistryHandle(c *gin.Context)  {
 }
 func LoginHandle(c *gin.Context)  {
 	user :=&model.HomeUser{}
-	user.UNickname=c.PostForm("u_nickname")
-	user.UPassword=c.PostForm("u_password")
+	if c.Request.PostForm == nil{
+		data,_:=ioutil.ReadAll(c.Request.Body)
+		err := json.Unmarshal(data, user)
+		fmt.Println(*user)
+		if err!=nil{
+			fmt.Println("Unmarshal wrong")
+			return
+		}
+	}else{
+		user.UNickname=c.PostForm("u_name")
+		user.UPassword=c.PostForm("u_password")
+	}
 	user ,err:= dao.GinDao.GetUser(user.UNickname,user.UPassword)
 	if err!=nil{
 		c.JSON(http.StatusOK,gin.H{
@@ -70,6 +83,7 @@ func LoginHandle(c *gin.Context)  {
 	session:=sessions.Default(c)
 	session.Set("username",user.UNickname)
 	session.Save()
+	fmt.Println(user)
 	c.JSON(http.StatusOK,gin.H{
 		"code":200,
 		"msg":"登入成功！",
@@ -79,8 +93,7 @@ func LoginHandle(c *gin.Context)  {
 
 func CurrentUserTest(c *gin.Context)  {
 	session := sessions.Default(c)
-	sessValue := session.Get("username")
-	username,ok := sessValue.(string)
+	username,ok:= session.Get("username").(string)
 	if !ok{
 		return
 	}

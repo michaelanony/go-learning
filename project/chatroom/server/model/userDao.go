@@ -17,7 +17,7 @@ type UserDao struct {
 }
 
 //使用工厂函数，创建一个UserDao实例
-func NewUserDao(pool *redis.Pool) (userDao *UserDao) {
+func eNewUserDao(pool *redis.Pool) (userDao *UserDao) {
 	userDao = &UserDao{
 		pool: pool,
 	}

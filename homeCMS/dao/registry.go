@@ -18,15 +18,15 @@ func (d *UserDao)RegistryUser(homeUser *model.HomeUser) (userId int64 ,err error
 }
 
 //从数据库获取用户
-func (d *UserDao)GetUser(nickName,password string) (ret *model.HomeUser,err error) {
+func (d *UserDao)GetUser(username,password string) (ret *model.HomeUser,err error) {
 	ret = &model.HomeUser{}
 	if password ==""{
-		sqlStr:="select * from home_user where u_nickname = ?"
-		err = d.MysqlPool.Get(ret,sqlStr,nickName)
+		sqlStr:="select * from home_user where u_name = ?"
+		err = d.MysqlPool.Get(ret,sqlStr,username)
 		return
 	}
-	sqlStr :="select * from home_user where u_nickname = ? and u_password=?"
-	err = d.MysqlPool.Get(ret,sqlStr,nickName,password)
+	sqlStr :="select * from home_user where u_name = ? and u_password=?"
+	err = d.MysqlPool.Get(ret,sqlStr,username,password)
 	return
 }
 //检查用户名密码是否正确

@@ -23,8 +23,8 @@ func Cors() gin.HandlerFunc {
 			headerStr = "access-control-allow-origin, access-control-allow-headers"
 		}
 		if origin != "" {
-			//下面的都是乱添加的-_-~
-			// c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+
+			c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 			c.Header("Access-Control-Allow-Origin", "*")
 			c.Header("Access-Control-Allow-Headers", headerStr)
 			c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
@@ -38,8 +38,8 @@ func Cors() gin.HandlerFunc {
 		//放行所有OPTIONS方法
 		if method == "OPTIONS" {
 			c.JSON(http.StatusOK, "Options Request!")
+			//c.AbortWithStatus(http.StatusNoContent)
 		}
-
 		c.Next()
 	}
 }
