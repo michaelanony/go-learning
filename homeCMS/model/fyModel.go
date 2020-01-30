@@ -19,3 +19,9 @@ type StaticNum struct {
 	CureNumAll int64 `json:"cure_num_all" db:"cure_num_all"`
 	UpdateTime time.Time `json:"update_time" db:"update_time"`
 }
+
+type CitySearchPy struct {
+	Id int64 `json:"id" db:"id"`
+	CityName string `json:"city_name" db:"city_name"`
+	CityPy string `json:"city_py" db:"city_py"`
+}

@@ -33,3 +33,16 @@ func GetCurrentCityStatus(c *gin.Context)  {
 		"data":cs,
 	})
 }
+
+func GetCityList(c *gin.Context)  {
+	ret, err := dao.GinDao.GetCityListDb()
+	if err!=nil{
+		fmt.Println(err)
+		return
+	}
+	c.JSON(200,gin.H{
+		"code":200,
+		"msg":"success",
+		"data":ret,
+	})
+}

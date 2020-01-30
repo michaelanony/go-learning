@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"fmt"
 	"github.com/garyburd/redigo/redis"
 	"go-learning/homeCMS/model"
 )
@@ -8,8 +9,8 @@ import (
 
 //注册用户
 func (d *UserDao)RegistryUser(homeUser *model.HomeUser) (userId int64 ,err error) {
-	sqlStr:="insert into home_user(u_name,u_nickname,u_password,u_register_ip) values(?,?,?,?)"
-	ret, err := d.MysqlPool.Exec(sqlStr, homeUser.UName, homeUser.UNickname, homeUser.UPassword,homeUser.URegisterIp)
+	sqlStr:="insert into home_cms.home_user(u_name,u_password,u_register_ip) values(?,?,?,?)"
+	ret, err := d.MysqlPool.Exec(sqlStr, homeUser.UName, homeUser.UPassword,homeUser.URegisterIp)
 	if err!=nil{
 		return
 	}
@@ -21,15 +22,29 @@ func (d *UserDao)RegistryUser(homeUser *model.HomeUser) (userId int64 ,err error
 func (d *UserDao)GetUser(username,password string) (ret *model.HomeUser,err error) {
 	ret = &model.HomeUser{}
 	if password ==""{
-		sqlStr:="select * from home_user where u_name = ?"
+		sqlStr:="select * from home_cms.home_user where u_name = ?"
 		err = d.MysqlPool.Get(ret,sqlStr,username)
 		return
 	}
-	sqlStr :="select * from home_user where u_name = ? and u_password=?"
+	sqlStr :="select * from home_cms.home_user where u_name = ? and u_password=?"
+	fmt.Println(username,password)
 	err = d.MysqlPool.Get(ret,sqlStr,username,password)
+	if err!=nil{
+		fmt.Println(err)
+	}
 	return
 }
-//检查用户名密码是否正确
+//从数据库获取所有用户
+func (d *UserDao)GetAllUser() (ret []model.HomeUser,err error) {
+	ret = make([]model.HomeUser,0)
+	sqlStr :="select * from home_cms.home_user"
+	err = d.MysqlPool.Select(&ret,sqlStr)
+	if err!=nil{
+		fmt.Println(err)
+		return
+	}
+	return
+}
 
 
 //REDIS PROCESS

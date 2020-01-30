@@ -34,3 +34,11 @@ func (d *UserDao)GetCurrentCityStatus (city,param string) (ret []model.CityStatu
 		return
 	}
 }
+
+//获取所有城市列表
+func (d *UserDao)GetCityListDb() (ret []model.CitySearchPy,err error) {
+	ret = make([]model.CitySearchPy,0)
+	sqlStr:="select * from pneumonia_record.city_list"
+	err = d.MysqlPool.Select(&ret,sqlStr)
+	return
+}
