@@ -12,12 +12,13 @@ require (
 	github.com/go-log/log v0.1.0
 	github.com/go-redis/redis v6.15.6+incompatible
 	github.com/go-sql-driver/mysql v1.5.0
-	github.com/golang/protobuf v1.3.2
+	github.com/golang/protobuf v1.4.1
 	github.com/hpcloud/tail v1.0.0
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/micro/go-micro v1.18.0
 	github.com/onsi/ginkgo v1.11.0 // indirect
 	github.com/onsi/gomega v1.8.1 // indirect
 	github.com/satori/go.uuid v1.2.0
+	google.golang.org/grpc v1.29.1
 	gopkg.in/ini.v1 v1.44.0
 )

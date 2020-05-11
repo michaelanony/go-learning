@@ -1,0 +1,2 @@
+1、定义proto文件
+2、protoc -I . --go_out=plugins=grpc:. ./user.proto
