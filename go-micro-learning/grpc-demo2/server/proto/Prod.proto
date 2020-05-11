@@ -1,0 +1,16 @@
+syntax="proto3";
+package services;
+import "google/api/annotations.proto";
+message ProdRequest{
+    int32 prod_id = 1;
+}
+message ProdResponse{
+    int32 prod_stock=1;
+}
+service ProdService{
+    rpc GetProdStock (ProdRequest)  returns (ProdResponse){
+        option (google.api.http)={
+            get:"/v1/prod/{prod_id}"
+        };
+    }
+}
