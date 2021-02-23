@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"runtime"
 	"strconv"
 	"time"
 )
@@ -20,7 +19,16 @@ func main() {
 	//	time.Sleep(time.Second)
 	//}
 	//获取当前cpu数量
-	num := runtime.NumCPU()
-	runtime.GOMAXPROCS(num)
-	fmt.Println("num=", num)
+	//num := runtime.NumCPU()
+	//runtime.GOMAXPROCS(num)
+	//fmt.Println("num=", num)
+	a := make(chan int, 3)
+	a <- 1
+	a <- -1
+	a <- 2
+	close(a)
+	for v := range a {
+		fmt.Println(v)
+	}
+
 }
